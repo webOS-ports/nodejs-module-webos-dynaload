@@ -58,7 +58,7 @@ v8::Local<v8::String> createV8StringFromFile(const char* inPathToFile)
 	// exception and throw a runtime exception with a less boost-flavored message.
 	boost::uintmax_t fileSize = bf::file_size(pathToFile);
 	if (fileSize == 0) {
-		return String::New("");
+		return String::NewFromUtf8(v8::Isolate::GetCurrent(), "");
 	}
 	bi::file_mapping mappedFile(inPathToFile, bi::read_only);
 	bi::mapped_region region(mappedFile, bi::read_only);
@@ -73,14 +73,15 @@ v8::Local<v8::String> createV8StringFromFile(const char* inPathToFile)
 	}
 	// Let v8 do its normal string conversion. This should be a rare case, as there's
 	// no good reason for a JavaScript source file to have anything but ASCII.
-    return String::New(startPtr, fileSize);
+    return String::NewFromUtf8(v8::Isolate::GetCurrent(), startPtr);
 }
 
 // Wrapper function to create a v8 external string.
 v8::Local<v8::String> MappedRegionExternalString::create(const char* pathToFile)
 {
+	Isolate* isolate = Isolate::GetCurrent();
 	MappedRegionExternalString* extString = new MappedRegionExternalString(pathToFile);
-	return String::NewExternal(extString);
+	return String::NewExternal(isolate, extString);
 }
 
 // The boost constructors do all the hard work of mapping the region and unmapping it when this object is destroyed.
