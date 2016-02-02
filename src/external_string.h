@@ -28,7 +28,7 @@
 
 v8::Local<v8::String> createV8StringFromFile(const char* pathToFile);
 
-class MappedRegionExternalString : public v8::String::ExternalAsciiStringResource {
+class MappedRegionExternalString : public v8::String::ExternalOneByteStringResource {
 public:
 	static v8::Local<v8::String> create(const char* pathToFile);
 	MappedRegionExternalString(const char* pathToFile);
