@@ -21,7 +21,6 @@ exports.name = "Nutmeg";
 console.log("another script, __filename = " + __filename);
 console.log("another script, __dirname = " + __dirname);
 
-var util=require('util');
 console.log("require works from module");
 
 setTimeout(function() {
