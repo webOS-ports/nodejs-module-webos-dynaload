@@ -142,7 +142,7 @@ static Handle<Value> Require(const Handle<Value>& nativeRequire, const Handle<Va
 	Context::Scope utilityScope(localUtilityContext);
 
 	// Set up an exports object for use by modules.
-	Handle<ObjectTemplate> exportsTemplate = ObjectTemplate::New();
+	Handle<ObjectTemplate> exportsTemplate = ObjectTemplate::New(isolate);
 	Local<Object> exportsInstance = exportsTemplate->NewInstance();
 	Local<Object> global = localUtilityContext->Global();
 	global->Set(
